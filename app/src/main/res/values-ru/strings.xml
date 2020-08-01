@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App name -->
+    <string name="app_name">Med Yu Med</string>
+
+    <!-- login page -->
+    <string name="title_activity_login">Войти в систему</string>
+    <string name="label_enter_phone_number">Введите номер телефона на который будет отправлена SMS с паролем для входа.</string>
+    <string name="prompt_phone">+70000000000</string>
+    <string name="action_sign_in">Войдите или зарегистрируйтесь</string>
+    <string name="welcome">"Добро пожаловать!"</string>
+    <string name="invalid_phone_number">Не корректно введен номер телефона!</string>
+    <string name="login_failed">"Не удалось войти!"</string>
+
+    <!-- password page -->
+    <string name="label_enter_password">Введите пароль из SMS.</string>
+    <string name="label_password_timer_finish">Отправить повторно SMS на номер \n{0} \nчерез {1} секунд(у).</string>
+</resources>
