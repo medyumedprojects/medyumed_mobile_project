@@ -1,12 +1,18 @@
 <resources>
+
+    <!-- App name -->
     <string name="app_name">Med Yu Med</string>
+
+    <!-- login page -->
     <string name="title_activity_login">Sign in</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
+    <string name="label_enter_phone_number">Enter the phone number to which an SMS with a password will be sent.</string>
+    <string name="prompt_phone">+70000000000</string>
     <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="invalid_phone_number">Not a valid phone number</string>
     <string name="login_failed">"Login failed"</string>
+
+    <!-- password page -->
+    <string name="label_enter_password">Enter the password from SMS.</string>
+    <string name="label_password_timer_finish">Send again SMS to number \n%s \nin %s second(s).</string>
 </resources>

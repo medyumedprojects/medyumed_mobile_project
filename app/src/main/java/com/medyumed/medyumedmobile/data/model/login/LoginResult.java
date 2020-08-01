@@ -2,15 +2,13 @@ package com.medyumed.medyumedmobile.data.model.login;
 
 import androidx.annotation.Nullable;
 
-import com.medyumed.medyumedmobile.ui.login.LoggedInUserView;
-
 
 /**
  * Authentication result : success (user details) or error message.
  */
 public class LoginResult {
     @Nullable
-    private LoggedInUserView success;
+    private String success;
     @Nullable
     private Integer error;
 
@@ -18,12 +16,12 @@ public class LoginResult {
         this.error = error;
     }
 
-    public LoginResult(@Nullable LoggedInUserView success) {
+    public LoginResult(@Nullable String success) {
         this.success = success;
     }
 
     @Nullable
-    public LoggedInUserView getSuccess() {
+    public String getSuccess() {
         return success;
     }
 
