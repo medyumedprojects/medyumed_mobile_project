@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -39,24 +40,31 @@ import com.medyumed.medyumedmobile.data.viewmodel.login.LoginViewModelFactory;
 public class LoginActivity extends AppCompatActivity {
     private SharedPreferences mySharedPreferences;
     private LoginViewModel loginViewModel;
+    private EditText phoneNumberEditText;
+    private static final String TAG = "Login Activity";
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mySharedPreferences = getSharedPreferences(Constants.SharedPreferences.APP_PREFERENCES,
-                Context.MODE_PRIVATE);
+        phoneNumberEditText = findViewById(R.id.phoneNumber);
+        final Button loginButton = findViewById(R.id.login);
+        final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
-        if(mySharedPreferences != null)
-            setPhoneNumberSharedPreference(null);
+        try {
+            mySharedPreferences = getSharedPreferences(Constants.SharedPreferences.APP_PREFERENCES,
+                    Context.MODE_PRIVATE);
+
+            if (mySharedPreferences != null)
+                setPhoneNumberSharedPreference(null);
+        } catch (Exception ex){
+            Log.e(TAG, "SharedPreferences exceptions", ex);
+        }
 
         loginViewModel =  new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
-
-        final EditText phoneNumberEditText = findViewById(R.id.phoneNumber);
-        final Button loginButton = findViewById(R.id.login);
-        final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -64,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (loginFormState == null) {
                     return;
                 }
+
                 loginButton.setEnabled(loginFormState.isDataValid());
                 if (loginFormState.getPhoneNumberError() != null) {
                     phoneNumberEditText.setError(getString(loginFormState.getPhoneNumberError()));
@@ -108,24 +117,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        TextWatcher afterTextChangedListener = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // ignore
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // ignore
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                loginViewModel.loginDataChanged(phoneNumberEditText.getText().toString());
-            }
-        };
-
-        phoneNumberEditText.addTextChangedListener(afterTextChangedListener);
+        phoneNumberEditText.addTextChangedListener(new CustomEditTextView(phoneNumberEditText));
         phoneNumberEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent event) {
@@ -155,9 +147,37 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    private class CustomEditTextView implements TextWatcher{
+
+        private EditText editText;
+
+        public CustomEditTextView(EditText e){
+            editText = e;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            loginViewModel.loginDataChanged(editText.getText().toString());
+        }
+    }
+
+    private void hideKeyboard(View view) {
+        try {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        } catch(Exception ex){
+            Log.e(TAG, "hideKeyboard exceptions", ex);
+        }
     }
 
     private void setPhoneNumberSharedPreference(String phoneNumber){
@@ -167,10 +187,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void showPasswordActivity(String phoneNumber) {
-        setPhoneNumberSharedPreference(phoneNumber);
+        try {
+            setPhoneNumberSharedPreference(phoneNumber);
 
-        Intent intent = new Intent(getApplicationContext(), PasswordActivity.class);
-        startActivity(intent);
+            Intent intent = new Intent(getApplicationContext(), PasswordActivity.class);
+            startActivity(intent);
+        } catch (Exception ex){
+            Log.e(TAG, "ShowPasswordActivity exceptions", ex);
+        }
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {

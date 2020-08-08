@@ -15,5 +15,5 @@
 
     <!-- password page -->
     <string name="label_enter_password">Введите пароль из SMS.</string>
-    <string name="label_password_timer_finish">Отправить повторно SMS на номер \n{0} \nчерез {1} секунд(у).</string>
+    <string name="label_password_timer_finish">Отправить повторно SMS на номер \n%s \nчерез %s секунд(у).</string>
 </resources>

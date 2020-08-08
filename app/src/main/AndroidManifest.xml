@@ -13,22 +13,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.waiter.WaiterActivity"></activity>
         <activity android:name=".activity.profile.ProfileActivity" />
-        <activity android:name=".activity.password.PasswordActivity"
-            android:theme="@style/NoActionBarTheme"
-            android:screenOrientation="portrait">
+        <activity
+            android:name=".activity.password.PasswordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.login.LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/NoActionBarTheme"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -38,6 +42,7 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

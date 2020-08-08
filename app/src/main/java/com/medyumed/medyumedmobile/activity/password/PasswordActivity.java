@@ -64,51 +64,75 @@ public class PasswordActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
                     startActivity(intent);
                 }
+                else{
+
+                }
             }
         });
 
-
-        //editTextInit();
+        editTextInit();
     }
 
     private void editTextInit(){
         try {
             num1 = findViewById(R.id.numberPass1);
             num2 = findViewById(R.id.numberPass2);
-            num2 = findViewById(R.id.numberPass3);
-            num3 = findViewById(R.id.numberPass4);
+            num3 = findViewById(R.id.numberPass3);
+            num4 = findViewById(R.id.numberPass4);
 
-            TextWatcher afterTextChangedListener = new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    // ignore
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    // ignore
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    String pass = getFullPassword();
-                    if(pass == null)
-                        return;
-
-                    viewModel.login(pass);
-                }
-            };
-
-            num1.addTextChangedListener(afterTextChangedListener);
-            num2.addTextChangedListener(afterTextChangedListener);
-            num3.addTextChangedListener(afterTextChangedListener);
-            num4.addTextChangedListener(afterTextChangedListener);
+            num1.addTextChangedListener(new CustomEditTextView(num1));
+            num2.addTextChangedListener(new CustomEditTextView(num2));
+            num3.addTextChangedListener(new CustomEditTextView(num3));
+            num4.addTextChangedListener(new CustomEditTextView(num4));
         } catch (Exception ex){
             String sdf = ex.getMessage();
         }
     }
 
+    private class CustomEditTextView implements TextWatcher{
+        private EditText editText;
+
+        public CustomEditTextView(EditText e){
+            editText = e;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            String pass = getFullPassword();
+            if(pass == null)
+                return;
+
+            viewModel.login(pass);
+        }
+    }
+
     public String getFullPassword(){
+        if (num1.getText() == null){
+            return null;
+        }
+
+        if (num2.getText() == null){
+            return null;
+        }
+
+        if (num3.getText() == null){
+            return null;
+        }
+
+        if (num1.getText() == null){
+            return null;
+        }
+
         String fullPass = num1.getText().toString() + num2.getText().toString()
                 + num3.getText().toString() + num4.getText().toString();
 
